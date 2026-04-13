@@ -1,0 +1,16 @@
+# Azure Developer CLI configuration
+name: mcp-server
+metadata:
+  template: mcp-server
+
+services:
+  mcp:
+    project: .
+    host: containerapp
+    language: ts
+    docker:
+      path: ./Dockerfile
+
+infra:
+  provider: bicep
+  path: ./infra
