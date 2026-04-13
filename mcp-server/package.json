@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "openclaw": {
+    "extensions": ["./dist/server.js"],
     "compat": {
       "pluginApi": ">=2026.3.24-beta.2"
     },

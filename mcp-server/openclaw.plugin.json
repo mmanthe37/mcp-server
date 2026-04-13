@@ -1,5 +1,25 @@
 {
   "id": "mmanthe37-mcp-server",
   "name": "MCP Server",
-  "description": "Production MCP server with web3, AgentKit, and Coinbase CDP tools. Provides echo, timestamp, system info, arithmetic, on-chain wallet actions, and CDP AgentKit operations via Streamable HTTP transport on Azure Container Apps."
+  "description": "Production MCP server with web3, AgentKit, and Coinbase CDP tools. Provides on-chain wallet actions, token prices, DeFi analytics, NFT data, and AgentKit operations via Streamable HTTP on Azure Container Apps.",
+  "tools": [
+    "echo", "get_timestamp", "system_info", "calculate",
+    "get_token_price", "search_token", "get_trending_tokens", "get_top_movers",
+    "get_wallet_balance", "get_gas_price", "get_erc20_balance", "get_transaction",
+    "get_defi_tvl", "get_top_defi_protocols", "get_nft_collection", "get_trending_nfts",
+    "get_token_price_history", "get_crypto_market_overview", "get_contract_info",
+    "agentkit_status", "agentkit_run_action", "agentkit_get_wallet", "agentkit_erc20_balance",
+    "agentkit_send_eth", "agentkit_swap_quote", "agentkit_wow_create_token",
+    "agentkit_compound_portfolio", "agentkit_flaunch", "agentkit_pyth_price"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "serverUrl": {
+        "type": "string",
+        "description": "Base URL of the deployed MCP server endpoint"
+      }
+    }
+  }
 }
