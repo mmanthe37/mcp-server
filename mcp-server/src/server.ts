@@ -8,7 +8,7 @@ import { registerWeb3Tools } from "./web3-tools.js";
 const app = express();
 app.use(express.json());
 
-const PORT = parseInt(process.env.PORT || "3000", 10);
+const PORT = 3000;
 const MAX_SESSIONS = 1000;
 const SESSION_TTL_MS = 30 * 60 * 1000; // 30 minutes
 
