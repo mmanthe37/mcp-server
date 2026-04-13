@@ -1,7 +1,7 @@
 ---
 name: mmanthe37-mcp-server
 description: Production MCP server with read-only web3 market data, DeFi analytics, NFT intelligence, and blockchain lookup tools.
-version: 0.1.4
+version: 0.1.5
 metadata:
   openclaw:
     emoji: "🔗"
