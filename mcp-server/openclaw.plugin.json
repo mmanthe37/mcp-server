@@ -1,0 +1,5 @@
+{
+  "id": "mmanthe37-mcp-server",
+  "name": "MCP Server",
+  "description": "Production MCP server with web3, AgentKit, and Coinbase CDP tools. Provides echo, timestamp, system info, arithmetic, on-chain wallet actions, and CDP AgentKit operations via Streamable HTTP transport on Azure Container Apps."
+}
