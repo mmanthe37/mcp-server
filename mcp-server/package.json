@@ -15,6 +15,14 @@
   ],
   "author": "",
   "license": "ISC",
+  "openclaw": {
+    "compat": {
+      "pluginApi": ">=2026.3.24-beta.2"
+    },
+    "build": {
+      "openclawVersion": "2026.3.24-beta.2"
+    }
+  },
   "dependencies": {
     "@coinbase/agentkit": "^0.10.4",
     "@coinbase/agentkit-model-context-protocol": "^0.2.0",
