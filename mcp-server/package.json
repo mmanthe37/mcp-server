@@ -1,0 +1,34 @@
+{
+  "name": "mmanthe37-mcp-server",
+  "version": "1.0.0",
+  "description": "Production MCP server deployed to Azure Container Apps",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@coinbase/agentkit": "^0.10.4",
+    "@coinbase/agentkit-model-context-protocol": "^0.2.0",
+    "@coinbase/cdp-sdk": "^1.45.0",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "dotenv": "^17.3.1",
+    "express": "^5.1.0",
+    "viem": "^2.47.6",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.2",
+    "@types/node": "^22.15.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
