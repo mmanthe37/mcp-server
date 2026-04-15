@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '@/lib/constants';
 import { NotificationBell } from '@/components/features/notifications/NotificationBell';
@@ -8,11 +8,21 @@ import { CreateActionSheet } from '@/components/navigation/CreateActionSheet';
 import { MoreMenu } from '@/components/navigation/MoreMenu';
 
 export default function TabLayout() {
+  const router = useRouter();
   const [showCreate, setShowCreate] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
   const headerRight = () => (
     <View className="flex-row items-center mr-2 gap-2">
+      <TouchableOpacity
+        onPress={() => router.push('/search')}
+        className="p-1"
+        activeOpacity={0.7}
+        accessibilityRole="search"
+        accessibilityLabel="Search community"
+      >
+        <Ionicons name="search" size={22} color={COLORS.white} />
+      </TouchableOpacity>
       <TouchableOpacity
         onPress={() => setShowMore(true)}
         className="p-1"
