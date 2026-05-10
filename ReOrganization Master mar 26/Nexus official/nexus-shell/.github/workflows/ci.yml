@@ -1,0 +1,96 @@
+name: NexusShell CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_VERSION: '20'
+  EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+jobs:
+  lint-and-typecheck:
+    name: Lint & Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run lint --workspaces --if-present
+      - run: npm run typecheck --workspaces --if-present
+
+  test-packages:
+    name: Test Packages
+    runs-on: ubuntu-latest
+    needs: lint-and-typecheck
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm test --workspace=packages/shared-types --if-present
+      - run: npm test --workspace=packages/nexusflow-protocol --if-present
+      - run: npm test --workspace=packages/terminal-parser --if-present
+      - run: npm test --workspace=packages/policy-engine --if-present
+      - run: npm test --workspace=packages/ai-models --if-present
+
+  test-server:
+    name: Test Server
+    runs-on: ubuntu-latest
+    needs: lint-and-typecheck
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: nexus
+          POSTGRES_PASSWORD: nexus_test
+          POSTGRES_DB: nexus_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://nexus:nexus_test@localhost:5432/nexus_test
+      JWT_SECRET: test-secret-key-for-ci
+      NODE_ENV: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npx prisma migrate deploy --schema=server/prisma/schema.prisma
+      - run: npm test --workspace=server --if-present
+
+  build-mobile:
+    name: Build Mobile (EAS)
+    runs-on: ubuntu-latest
+    needs: [test-packages, test-server]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - run: npm ci
+      - name: Build iOS preview
+        working-directory: apps/mobile
+        run: eas build --platform ios --profile preview --non-interactive
+      - name: Build Android preview
+        working-directory: apps/mobile
+        run: eas build --platform android --profile preview --non-interactive
