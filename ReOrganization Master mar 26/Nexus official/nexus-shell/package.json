@@ -1,0 +1,33 @@
+{
+  "name": "nexus-shell",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NexusShell — Neural Extensible Universal System. Cross-platform secure terminal with AI intelligence.",
+  "author": "mmanthe37",
+  "license": "MIT",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "server"
+  ],
+  "scripts": {
+    "dev:server": "cd server && npm run dev",
+    "dev:mobile": "cd apps/mobile && npx expo start",
+    "build:server": "cd server && npm run build",
+    "build:packages": "npm run --workspaces --if-present build",
+    "lint": "npm run --workspaces --if-present lint",
+    "test": "jest --passWithNoTests",
+    "test:ci": "jest --ci --coverage --passWithNoTests",
+    "clean": "rm -rf node_modules && npm run --workspaces --if-present clean"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.4.9",
+    "ts-node": "^10.9.2"
+  }
+}
